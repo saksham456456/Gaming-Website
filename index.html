@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patience.exe — Think fast? That will lose.</title>
+    <meta
+      name="description"
+      content="Patience.exe is a premium browser challenge where rushing fails and discipline wins. Survive traps, timing tests, and brutal patience mechanics to unlock the final door."
+    />
+    <meta property="og:title" content="Patience.exe" />
+    <meta
+      property="og:description"
+      content="Every shortcut has a price. Reach the final door through precision, restraint, and absurd patience."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#090b12" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div id="app-loader" class="loader" aria-live="polite">
+      <div class="loader__ring" aria-hidden="true"></div>
+      <p>Booting Patience.exe...</p>
+    </div>
+
+    <header class="site-header glass">
+      <a class="brand" href="#home" aria-label="Patience.exe Home">Patience.exe</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav aria-label="Primary" class="site-nav">
+        <a href="#home">Home</a>
+        <a href="#how">How to Play</a>
+        <a href="#game">Game</a>
+        <a href="#stats">Stats</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="hero section">
+        <div class="hero__content">
+          <p class="kicker">Premium Browser Challenge</p>
+          <h1>Think fast? <span>That will lose.</span></h1>
+          <p>
+            Patience.exe is a brutal game of restraint. Moving buttons, fake shortcuts,
+            deceptive progress, and high-pressure timing gates stand between you and the final door.
+          </p>
+          <div class="hero__cta">
+            <button class="btn btn--primary" data-action="start-game">Start Game</button>
+            <a href="#how" class="btn btn--ghost">How It Works</a>
+          </div>
+          <ul class="hero__features">
+            <li>6 escalating patience trials</li>
+            <li>Local persistence + profile stats</li>
+            <li>Replay-friendly hidden achievements</li>
+          </ul>
+        </div>
+        <div class="hero__visual" aria-hidden="true">
+          <div class="glow-orb"></div>
+          <div class="scanline"></div>
+          <div class="pulse-card">FINAL DOOR: LOCKED</div>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <h2>How to Play</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>1. Stay Calm</h3>
+            <p>Speed is bait. Most failures come from reacting before observing.</p>
+          </article>
+          <article class="card">
+            <h3>2. Read Every Prompt</h3>
+            <p>Traps look like shortcuts. Buttons lie. Progress bars can lie harder.</p>
+          </article>
+          <article class="card">
+            <h3>3. Win by Discipline</h3>
+            <p>Some levels require waiting, precision, and exact sequence memory.</p>
+          </article>
+        </div>
+        <div class="rules">
+          <p><strong>Controls:</strong> Mouse or touch + keyboard (Tab / Enter / Space / Esc).</p>
+          <p><strong>Warning:</strong> Rushing gets punished. The game is hard, but not random.</p>
+        </div>
+      </section>
+
+      <section id="game" class="section">
+        <div class="section__head">
+          <h2>Game Screen</h2>
+          <div class="controls">
+            <button class="btn btn--ghost" data-action="pause">Pause</button>
+            <button class="btn btn--ghost" data-action="hint">Hint</button>
+            <button class="btn btn--ghost" data-action="restart">Restart</button>
+            <button class="btn btn--ghost" data-action="toggle-sound" aria-pressed="false">Sound: Off</button>
+            <button class="btn btn--ghost" data-action="share">Share</button>
+          </div>
+        </div>
+
+        <div class="game-shell glass" aria-live="polite">
+          <div class="game-meta">
+            <p id="stage-label">Stage 1 / 6 — Moving Target</p>
+            <p id="feedback">The final door opens only for the disciplined.</p>
+          </div>
+          <div class="progress-wrap">
+            <div id="true-progress" class="bar bar--true" role="progressbar" aria-label="True progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+            <div id="fake-progress" class="bar bar--fake" aria-hidden="true"></div>
+          </div>
+          <div id="game-area" class="game-area"></div>
+        </div>
+      </section>
+
+      <section id="stats" class="section">
+        <h2>Achievements & Stats</h2>
+        <div class="card-grid">
+          <article class="card"><h3>Attempts</h3><p id="stat-attempts">0</p></article>
+          <article class="card"><h3>Total Fails</h3><p id="stat-fails">0</p></article>
+          <article class="card"><h3>Time Survived</h3><p id="stat-time">00:00</p></article>
+          <article class="card"><h3>Best Progress</h3><p id="stat-best">0%</p></article>
+          <article class="card"><h3>Most Impatient Move</h3><p id="stat-impatient">None yet</p></article>
+          <article class="card"><h3>Hidden Achievements</h3><p id="stat-achievements">0 / 4</p></article>
+        </div>
+      </section>
+
+      <section id="leaderboard" class="section">
+        <div class="section__head">
+          <h2>Leaderboard</h2>
+          <label>
+            Sort By
+            <select id="sort-board" aria-label="Sort leaderboard">
+              <option value="time">Fastest Time</option>
+              <option value="fails">Fewest Fails</option>
+              <option value="patience">Most Patience</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-wrap glass">
+          <table>
+            <thead>
+              <tr><th>Rank</th><th>Player</th><th>Time</th><th>Fails</th><th>Patience Score</th></tr>
+            </thead>
+            <tbody id="leaderboard-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <h2>About Patience.exe</h2>
+        <p>
+          We built Patience.exe because modern games reward speed, noise, and panic. This one rewards restraint.
+          Every stage is a psychological duel: your instinct says “click now.” The game says “wait.”
+        </p>
+      </section>
+
+      <section id="faq" class="section">
+        <h2>FAQ & Support</h2>
+        <details><summary>Is the game fair?</summary><p>Yes. Harsh, but learnable. Every trap has a pattern.</p></details>
+        <details><summary>Why is it so hard?</summary><p>The core mechanic is impulse control, not speed.</p></details>
+        <details><summary>Does it save progress?</summary><p>Stats and settings are saved locally on this device.</p></details>
+        <details><summary>Is it mobile-friendly?</summary><p>Yes. Controls are touch-safe and layouts are responsive.</p></details>
+        <p>Support: <a href="mailto:support@patienceexe.example">support@patienceexe.example</a></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Patience.exe — Every shortcut has a price.</p>
+      <nav aria-label="Footer links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookies</a>
+        <a href="#faq">Support</a>
+      </nav>
+    </footer>
+
+    <aside class="settings-panel glass" id="settings-panel" aria-label="Settings">
+      <h2>Settings</h2>
+      <label><input type="checkbox" id="reduced-motion-toggle" /> Reduced Motion</label>
+      <label><input type="checkbox" id="difficulty-toggle" /> Brutal+ Mode</label>
+    </aside>
+  </body>
+</html>
